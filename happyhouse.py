@@ -20,6 +20,7 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import pylab
+matplotlib.pyplot.ion()     # matplotlib.pyplot.ioff()
 
 from matplotlib.pyplot import imshow
 
@@ -93,7 +94,7 @@ def mainfunc():
 
     ### Exercise: Implement step 3, i.e. train the model.
     ###  Choose the number of epochs and the batch size.
-    happyModel.fit(x = X_train, y = Y_train, epochs = 40, batch_size = 16)
+    happyModel.fit(x = X_train, y = Y_train, epochs = 2, batch_size = 16)
 
     ### Exercise: Implement step 4, i.e. test/evaluate the model.
     preds = happyModel.evaluate(x = X_test, y = Y_test)
@@ -101,14 +102,20 @@ def mainfunc():
     print ("Loss = " + str(preds[0]))
     print ("Test Accuracy = " + str(preds[1]))
 
-
     ### Test with own image ###
-    img_path = 'images/my_image.jpg'
+    img_path = 'images/sad_face.jpg'
     img = image.load_img(img_path, target_size=(64, 64))
     imshow(img)
+    # plt.show()
 
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
-
     print(happyModel.predict(x))
+
+    ### Other Kera functions
+    happyModel.summary()
+    plot_model(happyModel, to_file='HappyModel.png')
+    # SVG(model_to_dot(happyModel).create(prog='dot', format='svg'))
+
+
